@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="backEndPage.css">
+    <title>電商後台</title>
+</head>
+
+<body>
+    <div class="container">
+        <div id="app" class="pt-4">
+
+            <!-- 商品列表標題 -->
+            <h1 class="fs-2 pb-2 text-center">產品列表</h1>
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="table-responsive">
+
+                        <!-- 商品列表表格 -->
+                        <table class="table">
+
+                            <!-- 表格：表頭 -->
+                            <thead class="table-secondary text-center align-middle">
+                                <tr>
+                                    <th class="d-none d-md-flex justify-content-md-center">商品圖</th>
+                                    <th>品名</th>
+                                    <th>原價</th>
+                                    <th>售價</th>
+                                    <th>狀態</th>
+                                    <th>詳細資訊</th>
+                                </tr>
+                            </thead>
+                            <!-- 表格：主內容 -->
+                            <tbody v-for="item in products" class="text-center align-middle">
+                                <tr>
+                                    <th class="d-none d-md-flex justify-content-md-center"><img class="table-img py-2"
+                                            :src="item.imageUrl" :alt="item.title"></th>
+                                    <th> {{item.title}} </th>
+                                    <th> {{item.origin_price}} </th>
+                                    <th> {{item.price}} </th>
+                                    <th>
+                                        <div class="form-check form-switch d-flex justify-content-center">
+                                            <input class="form-check-input me-2" type="checkbox" role="switch"
+                                                v-model="item.is_enabled" :true-value="true" :false-value="false"
+                                                :id="item.id">
+                                            <label class="form-check-label" v-if="item.is_enabled"
+                                                :for="item.id">上架</label>
+                                            <label class="form-check-label" v-else :for="item.id">下架</label>
+                                        </div>
+                                    </th>
+                                    <th><button class="btn btn-secondary" @click="tempProduct = item">查看</button></th>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <h5 class="fs-6 mb-4">目前有 <span>{{ products.length }}</span> 項產品</h5>
+                </div>
+
+                <!-- 詳細資訊 -->
+                <div class="col-12">
+
+                    <!-- v-if 篩選出符合條件的物件 -->
+                        <div class="card my-4 product-detail-card rounded-4 w-100" v-if="tempProduct.id">
+                            <div class="row g-0">
+                                <div class="col-md-6 rounded-4 d-flex justify-content-center mb-md-none bg-light">
+                                    <img :src="tempProduct.imageUrl" class="img-fluid rounded-4 p-4" :alt="tempProduct.title">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body ms-4">
+                                        <!-- 卡片標題 -->
+                                        <h4 class="card-bookTitle mb-4 d-flex justify-content-between pe-4"> {{
+                                            tempProduct.title }}
+                                            <span class="badge rounded-pill bg-black d-block">
+                                                {{ tempProduct.category }}
+                                            </span>
+                                        </h4>
+                                        <!-- 卡片本體 -->
+                                        <ul class="list-unstyled">
+                                            <li class="author mb-2"><span class="fw-bold">作者：</span>{{ tempProduct.author }} </li>
+                                            <li class="publisher mb-2"><span class="fw-bold">出版社：</span>{{ tempProduct.publisher }} </li>
+                                            <li class="ISBN mb-2"><span class="fw-bold">ISBN：</span>{{ tempProduct.ISBN }} </li>
+                                            <li class="bookDate mb-2"><span class="fw-bold">出版日期：</span>{{ tempProduct.date }}</li>
+                                            <li class="bookSize mb-2"><span class="fw-bold">尺寸：</span>{{ tempProduct.size }} </li>
+                                            <li class="bookPrice mb-2"><span class="fw-bold">原價：</span>{{tempProduct.origin_price}} 元</li>
+                                            <li class="bookPrice mb-2"><span class="fw-bold">特價：</span>{{tempProduct.price}} 元 </li>
+                                            <li class="bookNum mb-4"><span class="fw-bold">尚有庫存：</span>{{tempProduct.productNum}} 本</li>
+                                            <li class="bookDescription">{{tempProduct.description}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    
+                </div>
+
+                <div class="col-12">
+                    <div class="d-flex mb-4">
+                            
+                        <template v-for="image in tempProduct.imagesUrl">
+
+                            <img class="me-4 images" :src="image" alt="">
+
+                        </template>
+                        
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Vue -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- Boostrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="backEndPage.js"></script>
+</body>
+
+</html>

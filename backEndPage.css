@@ -8,5 +8,13 @@ img {
   }
   
   .images {
-    height: 150px;
+    height: 250px;
+  }
+
+  .table-img{
+    width: 125px;
+  }
+
+  .product-detail-card{
+    width: 40rem;
   }
